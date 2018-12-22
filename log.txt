@@ -1,2 +1,4 @@
 
 Command Entered was: node liri.js movie-this moana
+Command Entered was: node liri.js spotify-this-song "I Want it That Way"
+Command Entered was: node liri.js movie-this deadpool

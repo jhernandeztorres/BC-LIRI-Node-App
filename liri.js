@@ -10,7 +10,7 @@ const spotify = new Spotify(keys.spotify);
 
 const [node, file, action, ...args] = process.argv;
 let joined = args.join("+");
-
+console.log(keys.omdb);
 switch (action) {
     case "concert-this":
         concert(joined);
@@ -94,7 +94,7 @@ function movie(movieTitle) {
     if (!movieTitle) {
         movieTitle = 'Mr Nobody';
     }
-    let queryUrl = 'http://www.omdbapi.com/?t=' + movieTitle + '&y=&plot=short&apikey=3146c956';
+    let queryUrl = 'http://www.omdbapi.com/?t=' + movieTitle + '&y=&plot=short&apikey=' + keys.omdb.apiKey;
     axios.get(queryUrl)
         .then((result) => {
             const {
