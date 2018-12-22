@@ -4,13 +4,12 @@ const fs = require("fs");
 
 const axios = require("axios");
 const Spotify = require("node-spotify-api");
-const moment = require("moment");
 
 const spotify = new Spotify(keys.spotify);
 
 const [node, file, action, ...args] = process.argv;
 let joined = args.join("+");
-console.log(keys.omdb);
+
 switch (action) {
     case "concert-this":
         concert(joined);
@@ -41,8 +40,8 @@ function concert(band) {
         if (err) {
             console.log(err);
         }
+        console.log("Function still being built. Come back some other time to try it out.");
     })
-    // waiting on apiKey
 }
 
 function spotifyThis(song) {
