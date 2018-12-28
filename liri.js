@@ -25,17 +25,17 @@ function concert(input) {
             if (!result.data[0]) {
                 console.log("No upcoming shows for this artist.");
             } else {
-                for(let i = 0; i < result.data.length; i++){
-                input = input.toUpperCase();
-                const {
-                    country,
-                    city,
-                    name,
-                    region
-                } = result.data[i].venue;
-                const lineup = result.data[i].lineup;
-                const dateTime = moment(result.data[i].datetime).format("dddd, DD MMMM YYYY");
-                let bandInfo = `\r\n
+                for (let i = 0; i < result.data.length; i++) {
+                    input = input.toUpperCase();
+                    const {
+                        country,
+                        city,
+                        name,
+                        region
+                    } = result.data[i].venue;
+                    const lineup = result.data[i].lineup;
+                    const dateTime = moment(result.data[i].datetime).format("dddd, DD MMMM YYYY");
+                    let bandInfo = `\r\n
 -----------------------------------------------------
         Upcoming Show for ${input}
 -----------------------------------------------------
@@ -46,8 +46,8 @@ State: ${region}
 Country: ${country}
 Date: ${dateTime}
 \r\n`
-                console.log(bandInfo);
-            };
+                    console.log(bandInfo);
+                };
             };
         });
 }
@@ -101,9 +101,10 @@ function movie(input) {
     if (!input) {
         input = 'Mr Nobody';
     }
-    let queryUrl = 'http://www.omdbapi.com/?t=' + input + '&y=&plot=short&apikey=' + keys.omdb.apiKey;
+    let queryUrl = 'https://www.omdbapi.com/?t=' + input + '&y=&plot=short&apikey=' + keys.omdb.apiKey;
     axios.get(queryUrl)
         .then((result) => {
+            // console.log(result.data);
             const {
                 Title,
                 Year,
@@ -113,7 +114,11 @@ function movie(input) {
                 Plot,
                 Actors
             } = result.data;
-            const tomatoRating = result.data.Ratings[1].Value;
+            if(!result.data.Ratings[1]){
+                tomatoRating = "N/A";
+            } else {
+                tomatoRating = result.data.Ratings[1].Value;
+            }
             let movieInfo = `\r\n\
 ----------------------------------------------
                 Movie Information
@@ -125,7 +130,8 @@ Language: ${Language}
 Plot: ${Plot} 
 Actors: ${Actors} 
 IMDB Rating: ${imdbRating} 
-Rotten Tomatoes Rating:  ${tomatoRating}`;
+Rotten Tomatoes Rating:  ${tomatoRating}
+\r\n`;
             console.log(movieInfo);
         })
 }
