@@ -4,6 +4,7 @@ const keys = require('./keys');
 const fs = require("fs");
 const axios = require("axios");
 const Spotify = require("node-spotify-api");
+const moment = require("moment");
 
 const spotify = new Spotify(keys.spotify);
 
@@ -12,8 +13,43 @@ function concert(input) {
         if (err) {
             console.log(err);
         }
-        console.log("Function still being built. Come back some other time to try it out.");
     })
+
+    if (!input) {
+        input = 'Blue October';
+    }
+    let queryUrl = 'https://rest.bandsintown.com/artists/' + input + '/events?app_id=' + keys.band.apiKey + '&date=upcoming';
+    axios.get(queryUrl)
+        .then((result) => {
+            // console.log(result.data);
+            if (!result.data[0]) {
+                console.log("No upcoming shows for this artist.");
+            } else {
+                for(let i = 0; i < result.data.length; i++){
+                input = input.toUpperCase();
+                const {
+                    country,
+                    city,
+                    name,
+                    region
+                } = result.data[i].venue;
+                const lineup = result.data[i].lineup;
+                const dateTime = moment(result.data[i].datetime).format("dddd, DD MMMM YYYY");
+                let bandInfo = `\r\n
+-----------------------------------------------------
+        Upcoming Show for ${input}
+-----------------------------------------------------
+Lineup: ${lineup}
+Name: ${name}
+City: ${city}
+State: ${region}
+Country: ${country}
+Date: ${dateTime}
+\r\n`
+                console.log(bandInfo);
+            };
+            };
+        });
 }
 
 function spotifyThis(input) {
@@ -90,7 +126,7 @@ Plot: ${Plot}
 Actors: ${Actors} 
 IMDB Rating: ${imdbRating} 
 Rotten Tomatoes Rating:  ${tomatoRating}`;
-console.log(movieInfo);
+            console.log(movieInfo);
         })
 }
 
@@ -133,28 +169,28 @@ function mediaThis() {
             type: "input",
             message: "Enter what to look for:"
         }
-    ]).then(function(command){
-        
+    ]).then(function (command) {
+
         switch (command.command) {
             case "concert-this":
                 concert(command.usrInput);
                 break;
-    
+
             case "spotify-this-song":
                 spotifyThis(command.usrInput);
                 break;
-    
+
             case "movie-this":
                 movie(command.usrInput);
                 break;
-    
+
             case "do-what-it-says":
                 doIt();
                 break;
-    
+
             case "End program":
                 return;
-            }
+        }
     })
 }
 mediaThis();
