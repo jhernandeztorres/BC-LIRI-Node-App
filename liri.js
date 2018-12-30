@@ -73,20 +73,46 @@ function spotifyThis(input) {
         if (err) {
             console.log(err);
         } else {
-
-            let songInfo = data.tracks.items[0];
-            if (!songInfo) {
-                console.log("No song info retrieved. Check the song spelling and try again.");
-            } else {
-                let outputStr = '\r\n' +
-                    '-----------------------------------\n' +
-                    'Song Information:\n' +
-                    '------------------------------------\n\n' +
-                    'Song Name: ' + songInfo.name + '\n' +
-                    'Artist: ' + songInfo.artists[0].name + '\n' +
-                    'Album: ' + songInfo.album.name + '\n' +
-                    'Preview Here: ' + songInfo.preview_url + '\n';
-                console.log(outputStr);
+            for (let i = 0; i < data.tracks.items.length; i++) {
+                let songInfo = data.tracks.items[i];
+                let songName = songInfo.name;
+                let albumName = songInfo.album.name;
+                let songPreview = songInfo.preview_url;
+                for (let j = 0; j < songInfo.artists.length; j++) {
+                    let artistName = songInfo.artists[j].name;
+                    if (!songInfo) {
+                        console.log("No song info retrieved. Check the song spelling and try again.");
+                    }
+                    if (!songName) {
+                        songName = "N/A";
+                    } else {
+                        songName = songName;
+                    }
+                    if (!artistName) {
+                        artistName = "N/A";
+                    } else {
+                        artistName = artistName;
+                    }
+                    if (!albumName){
+                        albumName = "N/A";
+                    } else {
+                        albumName = albumName;
+                    }
+                    if (!songPreview){
+                        songPreview = "N/A";
+                    } else {
+                        songPreview = songPreview;
+                    }
+                    let outputStr = '\r\n' +
+                        '-----------------------------------\n' +
+                        'Song Information:\n' +
+                        '------------------------------------\n\n' +
+                        'Song Name: ' + songName + '\n' +
+                        'Artist: ' + artistName + '\n' +
+                        'Album: ' + albumName + '\n' +
+                        'Preview Here: ' + songPreview + '\n';
+                    console.log(outputStr);
+                }
             }
         }
     })
@@ -104,7 +130,7 @@ function movie(input) {
     let queryUrl = 'https://www.omdbapi.com/?t=' + input + '&y=&plot=short&apikey=' + keys.omdb.apiKey;
     axios.get(queryUrl)
         .then((result) => {
-            // console.log(result.data);
+            console.log(result.data);
             const {
                 Title,
                 Year,
@@ -114,7 +140,7 @@ function movie(input) {
                 Plot,
                 Actors
             } = result.data;
-            if(!result.data.Ratings[1]){
+            if (!result.data.Ratings[1]) {
                 tomatoRating = "N/A";
             } else {
                 tomatoRating = result.data.Ratings[1].Value;
