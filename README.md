@@ -31,8 +31,9 @@ LIRI is like iPhone's SIRI. However, while SIRI is a Speech Interpretation and R
 3. NPM [Axios](https://www.npmjs.com/package/axios)
 4. NPM [Moment](https://www.npmjs.com/package/moment)
 5. NPM [Node-spotify-api](https://www.npmjs.com/package/node-spotify-api)
-6. [OMDB API](https://www.omdbapi.com/)
-7. [BandsinTown API](https://manager.bandsintown.com/support/bandsintown-api)
+6. NPM [Dotenv](https://www.npmjs.com/package/dotenv)
+7. [OMDB API](https://www.omdbapi.com/)
+8. [BandsinTown API](https://manager.bandsintown.com/support/bandsintown-api)
    
 # License
 N/A
