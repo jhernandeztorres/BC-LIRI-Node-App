@@ -220,9 +220,10 @@ function mediaThis() {
                 doIt();
                 break;
 
-            case "End program":
+            case "End Program":
                 return;
         }
+        mediaThis();
     })
 }
 mediaThis();
